@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import App from "./App";
 import { theme } from "./theme";
 import { createGlobalStyle } from "styled-components";
-
+import {QueryClient,QueryClientProvider}from "react-query";
 const GlobalStyle = createGlobalStyle`
       @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
 html, body, div, span, applet, object, iframe,
@@ -56,7 +56,8 @@ table {
 }
 body{
   font-family: "Source Sans Pro",sans-serif;
-  color : black;
+  color :${props=>props.theme.white.darker};
+  background-color: black;
 }
 a{
   text-decoration: none;
@@ -67,11 +68,14 @@ a{
 }
 `;
 
+const client = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <QueryClientProvider client={client}>
       <App />
+      </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
